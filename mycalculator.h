@@ -37,8 +37,9 @@ public:
 class MyCaclulator : public QWidget
 {
     Q_OBJECT
-public:
-    explicit MyCaclulator(QWidget *parent = nullptr);
+
+
+private:
     QMenuBar *bar_mnu=new QMenuBar;
     QMenu *mnu=new QMenu("Меню");
     QLineEdit *resh=new QLineEdit;
@@ -52,8 +53,8 @@ public:
     QStack <double> call;
     QLabel *double_answ=new QLabel;
     QString nwst;
-
-
+public:
+    explicit MyCaclulator(QWidget *parent = nullptr);
     void show_n_calculate();
     void calculate(QList<QString> &numb);
     int priority(QString &STR);

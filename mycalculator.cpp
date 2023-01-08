@@ -143,11 +143,7 @@ void MyCaclulator::calculate(QList<QString> &numb)
 void MyCaclulator::Take_to_stack()
 {
     int i=0;
-    std::string EXP;
-    EXP=expression->text().toStdString();
-    std::cout<<EXP<<std::endl<<EXP.size()<<std::endl;
     str=expression->text();
-    //str="123*(5)(-5)";
     if(str.isEmpty())
     {
         QMessageBox::critical(this,"Ошибка","Вы не ввели выражение");
@@ -156,17 +152,21 @@ void MyCaclulator::Take_to_stack()
         return;
     }
     polska->clear();
-
     bool flag=false;
-    bool skobka=false;
+    int incr_scobka=0;
     QString nwst_2;
-    nwst=str[0];
-
+    int d=str.size()-1;
 
     for ( i = 0; i < str.size(); ++i)
     {
-
         nwst=str[i];
+        if(!(str[d]>='0'&&str[d]<='9')&&(str[d]!=')'))
+        {
+         QMessageBox::critical(this,"Ошибка","Неправильно введенное выражение");
+         oper.clear();
+         numb.clear();
+         return;
+        };
         if(i>=1&&(str[i-1]=='.'||str[i-1]=='-'||str[i-1]=='+'||str[i-1]=='*'||str[i-1]=='^'||str[i-1]=='/')&&(str[i]=='.'||str[i]=='-'||str[i]=='+'||str[i]=='*'||str[i]=='/'||str[i]=='^'))
         {
          QMessageBox::critical(this,"Ошибка","Неправильно введенное выражение");
@@ -204,14 +204,15 @@ void MyCaclulator::Take_to_stack()
         }
         if(nwst=='(')
         {
-            skobka=true;
             item.operat=nwst;
             item.prior=1;
             oper.push_back(item);
+            incr_scobka=1+incr_scobka;
+            continue;
         }
         if(nwst==')')
         {
-            if(skobka==false)
+            if(oper.isEmpty())
             {
                 QMessageBox::critical(this,"Ошибка","Неправельно введенное выражение");
                 oper.clear();
@@ -224,7 +225,9 @@ void MyCaclulator::Take_to_stack()
                 oper.pop();
             }
             oper.pop();
-            skobka=false;
+            incr_scobka=incr_scobka-1;
+            continue;
+
         }
         if(nwst=='+'||nwst=='-'||nwst=='*'||nwst=='/'||nwst=='^')
         {
@@ -265,6 +268,13 @@ void MyCaclulator::Take_to_stack()
         }
         numb.append(oper.top().operat);
         oper.pop();
+    }
+    if(incr_scobka!=0)
+    {
+        QMessageBox::critical(this,"Ошибка","Неправельно введенное выражение");
+        oper.clear();
+        numb.clear();
+        return;
     }
     show_n_calculate();
 }
