@@ -19,7 +19,7 @@ MyCaclulator::MyCaclulator(QWidget *parent)
     : QWidget{parent}
 {
     QLabel *startMenu=new QLabel("Введите выражение");
-    QLabel *head_2=new QLabel("Запись в обратной польской:");
+    QLabel *head_2=new QLabel("Выражение в обратной польской записи:");
     QLabel *head_3=new QLabel("Решение:");
     startMenu->setBuddy(expression);
     head_2->setBuddy(head_3);
@@ -191,7 +191,7 @@ void MyCaclulator::Take_to_stack()
                 flag=false;
                 if(i>=1&&str[i-1]=='.'&&str[i]=='.')
                 {
-                    QMessageBox::critical(this,"Ошибка","Неправельно введенное выражение");
+                    QMessageBox::critical(this,"Ошибка","Неправильно введенное выражение");
                     oper.clear();
                     numb.clear();
                     return;
@@ -214,7 +214,7 @@ void MyCaclulator::Take_to_stack()
         {
             if(oper.isEmpty())
             {
-                QMessageBox::critical(this,"Ошибка","Неправельно введенное выражение");
+                QMessageBox::critical(this,"Ошибка","Неправильно введенное выражение");
                 oper.clear();
                 numb.clear();
                 return;
@@ -261,7 +261,7 @@ void MyCaclulator::Take_to_stack()
     {
         if(oper.top().operat=='(')
         {
-            QMessageBox::critical(this,"Ошибка","Неправельно введенное выражение");
+            QMessageBox::critical(this,"Ошибка","Неправильно введенное выражение");
             oper.clear();
             numb.clear();
             return;
@@ -271,7 +271,7 @@ void MyCaclulator::Take_to_stack()
     }
     if(incr_scobka!=0)
     {
-        QMessageBox::critical(this,"Ошибка","Неправельно введенное выражение");
+        QMessageBox::critical(this,"Ошибка","Неправильно введенное выражение");
         oper.clear();
         numb.clear();
         return;
